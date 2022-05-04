@@ -1,6 +1,6 @@
-from cProfile import label
-from automata import borders
+from .automata import borders
 from enum import Enum
+from numpy import zeros
 
 class states(Enum):
     BARREN= 0
@@ -26,29 +26,29 @@ def rules( matrix ):
                     aux[i][j]= states.BARREN
 
             elif( a==states.FERTILE ):
-                s_A= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
-                s_B= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
-                if( s_A >= 2 ):
+                s_a= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
+                s_b= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
+                if( s_a >= 2 ):
                     aux[i][j]= states.A
-                elif( s_A < 2 and s_B >= 2 ):   
+                elif( s_a < 2 and s_b >= 2 ):   
                     aux[i][j]= states.B
                 else:
                     aux[i][j]= states.FERTILE
             
             elif( a == states.A ):
-                s_A= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
-                s_B= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
-                if( s_B >= 2 ):
+                s_a= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
+                s_b= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
+                if( s_b >= 2 ):
                     aux[i][j]= states.B
-                elif( s_A <= 2 and s_B < 2 ):
+                elif( s_a <= 2 and s_b < 2 ):
                     aux[i][j]= states.BARREN
                 else:
                     aux[i][j]= states.A
             
             elif( a == states.B ):
-                s_A= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
-                s_B= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
-                if( s_B == 8 and s_A == 0 ):
+                s_a= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
+                s_b= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
+                if( s_b == 8 and s_a == 0 ):
                     aux[i][j]= states.BARREN
                 else:
                     aux[i][j]= states.B
