@@ -37,6 +37,11 @@ class automata():
         """
         self.rule = rule
 
+    def get_matrix(self):
+        """
+        get matrix"""
+        return self.matrix
+
     def envolve(self):
         """
         envolve matrix
