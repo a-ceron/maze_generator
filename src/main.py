@@ -21,10 +21,10 @@ def main():
     ac= automata.automata( (15,15), maze.rules )
     ac.set_random( maze.states )
 
-    for _ in range(10):
-        print( ac.matrix )
+    for i in range(10):
+        #print( ac.matrix )
         ac.envolve()
-
+        ac.show(i)
         
         
 

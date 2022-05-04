@@ -17,14 +17,14 @@ def rules( matrix ):
             a= matrix[i][j]
             v= borders.moore( matrix, i, j )
 
-            if( a == states.B.valueARREN.value ):
+            if( a == states.B.value ):
                 s= sum( [ X( y, states.A.value ) for y in v ] )
                 if s >= 2:
                     aux[i][j]= states.A.value
                 elif s < 2: 
                     aux[i][j]= states.FERTILE.value
                 else:
-                    aux[i][j]= states.B.valueARREN.value
+                    aux[i][j]= states.B.value
 
             elif( a==states.FERTILE.value ):
 
@@ -44,7 +44,7 @@ def rules( matrix ):
                 if( s_b >= 2 ):
                     aux[i][j]= states.B.value
                 elif( s_a <= 2 and s_b < 2 ):
-                    aux[i][j]= states.B.valueARREN.value
+                    aux[i][j]= states.B.value
                 else:
                     aux[i][j]= states.A.value
             
@@ -53,7 +53,7 @@ def rules( matrix ):
                 s_a= sum( [ X( y, states.A.value ) for y in v ] ) 
                 s_b= sum( [ X( y, states.B.value ) for y in v ] ) 
                 if( s_b == 8 and s_a == 0 ):
-                    aux[i][j]= states.B.valueARREN.value
+                    aux[i][j]= states.B.value
                 else:
                     aux[i][j]= states.B.value
 

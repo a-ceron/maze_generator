@@ -49,7 +49,7 @@ class automata():
         """
 
         fig, ax = subplots(figsize=figsize)
-        im= ax.imshow(self.matrix, cmap='gray')
+        im= ax.imshow(self.matrix, cmap='magma')
         ax.set_xticks(np.arange(0, self.dim[0], 1))
         ax.set_yticks(np.arange(0, self.dim[1], 1))
         ax.set_xticklabels(np.arange(0, self.dim[0], 1))
