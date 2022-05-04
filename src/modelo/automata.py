@@ -20,12 +20,16 @@ class automata():
         """
         set random matrix
         """
-        if( states == None ):
-            states= 2
         if( isinstance(states, int) ):
+            if( states == None ):
+                states= 2
             self.matrix = np.random.randint( states, size=self.dim)
-        elif( isinstance(states, list) or isinstance(states, EnumMeta) ):
-            self.matrix = np.random.choice( states, size=self.dim)
+        elif( isinstance(states, list) ):
+            self.matrix = np.random.choice( states, size=self.dim )
+        elif( isinstance(states, EnumMeta) ):
+            self.matrix = np.random.choice( [  x.value for x in states ], size=self.dim )
+        else:
+            raise Exception('states must be int or list or EnumMeta')
 
     def set_rule(self, rule:int):
         """
