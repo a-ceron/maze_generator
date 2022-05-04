@@ -16,13 +16,16 @@ class automata():
         if( initial == None ):
             self.matrix = np.zeros(dim)
 
-    def set_random(self, states:int= None):
+    def set_random(self, states:int or list= None ):
         """
         set random matrix
         """
         if( states == None ):
             states= 2
-        self.matrix = np.random.randint( states, size=self.dim)
+        if( isinstance(states, int) ):
+            self.matrix = np.random.randint( states, size=self.dim)
+        elif( isinstance(states, list) ):
+            self.matrix = np.random.choice( states, size=self.dim)
 
     def set_rule(self, rule:int):
         """
