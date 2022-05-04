@@ -18,10 +18,10 @@ def rule_1(matrix):
     return aux
 
 def main():
-    ac= automata.automata( (15,15), maze.rules )
+    ac= automata.automata( (50,50), maze.rules )
     ac.set_random( maze.states )
 
-    for i in range(10):
+    for i in range(100):
         #print( ac.matrix )
         ac.envolve()
         ac.show(i)
