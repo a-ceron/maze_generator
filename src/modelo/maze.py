@@ -15,9 +15,10 @@ def rules( matrix ):
     for i in range(matrix.shape[0]):
         for j in range(matrix.shape[1]):
             a= matrix[i][j]
-            
+            v= borders.moore( matrix, i, j )
+
             if( a == states.BARREN ):
-                s= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
+                s= sum( [ X( y, states.A ) for y in v ] )
                 if s >= 2:
                     aux[i][j]= states.A
                 elif s < 2: 
@@ -26,8 +27,8 @@ def rules( matrix ):
                     aux[i][j]= states.BARREN
 
             elif( a==states.FERTILE ):
-                s_a= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
-                s_b= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
+                s_a= sum( sum( [ X( y, states.A ) for y in v ] ) )
+                s_b= sum( sum( [ X( y, states.B ) for y in v ] ))
                 if( s_a >= 2 ):
                     aux[i][j]= states.A
                 elif( s_a < 2 and s_b >= 2 ):   
@@ -36,8 +37,8 @@ def rules( matrix ):
                     aux[i][j]= states.FERTILE
             
             elif( a == states.A ):
-                s_a= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
-                s_b= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
+                s_a= sum( sum( [ X( y, states.A ) for y in v ] ) )
+                s_b= sum( sum( [ X( y, states.B ) for y in v ] ))
                 if( s_b >= 2 ):
                     aux[i][j]= states.B
                 elif( s_a <= 2 and s_b < 2 ):
@@ -46,8 +47,8 @@ def rules( matrix ):
                     aux[i][j]= states.A
             
             elif( a == states.B ):
-                s_a= sum( map( X, borders.moore( matrix, i, j ) ), states.A )
-                s_b= sum( map( X, borders.moore( matrix, i, j ) ), states.B )
+                s_a= sum( sum( [ X( y, states.A ) for y in v ] ) )
+                s_b= sum( sum( [ X( y, states.B ) for y in v ] ))
                 if( s_b == 8 and s_a == 0 ):
                     aux[i][j]= states.BARREN
                 else:
