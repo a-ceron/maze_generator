@@ -1,6 +1,6 @@
 # Data
 # ============
-from time import sleep
+from enum import Enum, EnumMeta
 import numpy as np
 
 # Visualization
@@ -24,7 +24,7 @@ class automata():
             states= 2
         if( isinstance(states, int) ):
             self.matrix = np.random.randint( states, size=self.dim)
-        elif( isinstance(states, list) ):
+        elif( isinstance(states, list) or isinstance(states, EnumMeta) ):
             self.matrix = np.random.choice( states, size=self.dim)
 
     def set_rule(self, rule:int):
