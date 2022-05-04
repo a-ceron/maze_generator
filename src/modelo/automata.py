@@ -25,7 +25,7 @@ class automata():
                 states= 2
             self.matrix = np.random.randint( states, size=self.dim)
         elif( isinstance(states, list) ):
-            self.matrix = np.random.choice( states, size=self.dim )
+            self.matrix = np.random.choices( states, weights=[0.5, 0.1, 0.2, 0.2], size=self.dim )
         elif( isinstance(states, EnumMeta) ):
             self.matrix = np.random.choice( [  x.value for x in states ], size=self.dim )
         else:
@@ -48,55 +48,7 @@ class automata():
         """
         self.matrix= self.phi(self.matrix)
         
-    def show(self, i,figsize=(10,10) ):
-        """
-        show matrix
-        """
-
-        fig, ax = subplots(figsize=figsize)
-        im= ax.imshow(self.matrix, cmap='magma')
-        ax.set_xticks(np.arange(0, self.dim[0], 1))
-        ax.set_yticks(np.arange(0, self.dim[1], 1))
-        ax.set_xticklabels(np.arange(0, self.dim[0], 1))
-        ax.set_yticklabels(np.arange(0, self.dim[1], 1))
-        ax.set_xlabel('x')
-        ax.set_ylabel('y')
-        ax.set_title('Automata')
-        ax.grid()
-        fig.tight_layout()
-        fig.savefig(f'./img/automata{i}.png')
-    
-    def animate(self, figsize=(10,10) ):
-        """
-        animate matrix
-        """
-        fig, ax = subplots(figsize=figsize)
-        im = ax.imshow(self.matrix, cmap='gray')
-        def init():
-            im.set_data(self.matrix)
-            return [im]
-
-        def animate(i):
-            self.envolve()
-            im.set_data(self.matrix)
-            return [im]
-
-        anim = animation.FuncAnimation(
-                               fig, 
-                               animate, 
-                               init_func=init,
-                               frames = 5 * 30,
-                               interval = 1000 / 20, # in ms
-                               )
-
-        animation.PillowWriter()
-        #anim.save('test_anim.', fps=30, )#extra_args=['-vcodec', 'libx264'])
-        
-        #anim = animation.FuncAnimation(fig, animate, init_func=init, frames=30, interval=1000, blit=True)
-
-        show()
-
-
+   
 class borders():
     def vonn_n( matrix, i,j, is_sum=False):
         if( i == 0 and j == 0 ):
