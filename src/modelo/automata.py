@@ -25,7 +25,8 @@ class automata():
                 states= 2
             self.matrix = np.random.randint( states, size=self.dim)
         elif( isinstance(states, list) ):
-            self.matrix = np.random.choices( states, weights=[0.5, 0.1, 0.2, 0.2], size=self.dim )
+            # self.matrix = np.random.choices( states, weights=[0.5, 0.1, 0.2, 0.2], size=self.dim )
+            self.matrix = np.random.choice( states, size=self.dim )
         elif( isinstance(states, EnumMeta) ):
             self.matrix = np.random.choice( [  x.value for x in states ], size=self.dim )
         else:

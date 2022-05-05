@@ -33,10 +33,12 @@ def anim( ac ):
         im_normed = ac.get_matrix()
         ax.imshow(im_normed)
         ax.set_axis_off()
-
+        ax.set_title(f"Iteración {i}")
         ac.envolve()
 
-    anim = FuncAnimation(fig, update, frames=1, interval=10)
+        return [im_normed]
+
+    anim = FuncAnimation(fig, update, frames=100, interval=100)
 
     plt.show()
 
@@ -49,7 +51,7 @@ def main():
     #     [0,1,0]
     # ])
     # ac= automata.automata( base.shape, rule_1, base )
-    
+
     ac= automata.automata( (50,50), maze.rules )
     anim( ac )
         
