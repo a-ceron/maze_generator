@@ -13,6 +13,7 @@ class automata():
         self.dim = dim
         self.phi = phi
         self.matrix= initial
+        self.gen= 0
         if( initial is None ):
             self.matrix = np.zeros(dim)
 
@@ -43,11 +44,18 @@ class automata():
         get matrix"""
         return self.matrix
 
+    def get_gen(self):
+        """
+        get generation
+        """
+        return self.gen
+        
     def envolve(self):
         """
         envolve matrix
         """
         self.matrix= self.phi(self.matrix)
+        self.gen+= 1
         
    
 class borders():

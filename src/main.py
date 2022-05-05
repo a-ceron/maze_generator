@@ -34,27 +34,49 @@ def anim( ac ):
         ax.imshow(im_normed, cmap='rainbow')
         ax.set_axis_off()
         ax.set_title(f"Iteración {i}")
+        print(ac.get_gen())
         ac.envolve()
 
         return [im_normed]
 
     anim = FuncAnimation(fig, update, frames=200, interval=10)
 
-    fig.colorbar(ax=ax)
+    
     plt.show()
 
 
 
 def main():
-    base= np.array([
-        [0,1,0],
-        [1,0,1],
-        [0,1,0]
-    ])
-    # ac= automata.automata( base.shape, rule_1, base )
+    # base= np.array([
+    #     [0,1,0],
+    #     [1,0,1],
+    #     [0,1,0]
+    # ])
+    # # ac= automata.automata( base.shape, rule_1, base )
 
     ac= automata.automata( (70,70), maze.rules )
-    anim( ac )
+    # anim( ac )
+    ac.set_random( maze.states )
+    ac.envolve()
+    init= ac.get_matrix()
+
+    print(ac.get_gen())
+    for i in range(100):
+        ac.envolve()
+    t_1oo= ac.get_matrix()
+    print(ac.get_gen())
+
+    for i in range(100):
+        ac.envolve()
+    t_2oo= ac.get_matrix()
+    print(ac.get_gen())
+
+    plt.imshow(init, cmap='rainbow')
+    plt.show()
+    plt.imshow(t_1oo, cmap='rainbow')
+    plt.show()
+    plt.imshow(t_2oo, cmap='rainbow')
+    plt.show()
         
         
 
