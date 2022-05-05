@@ -13,7 +13,7 @@ class automata():
         self.dim = dim
         self.phi = phi
         self.matrix= initial
-        if( initial == None ):
+        if( initial is None ):
             self.matrix = np.zeros(dim)
 
     def set_random(self, states:int or list= None ):
@@ -21,7 +21,7 @@ class automata():
         set random matrix
         """
         if( isinstance(states, int) ):
-            if( states == None ):
+            if( states is None ):
                 states= 2
             self.matrix = np.random.randint( states, size=self.dim)
         elif( isinstance(states, list) ):

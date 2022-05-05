@@ -13,20 +13,20 @@ def rule_1(matrix):
     aux= np.zeros(matrix.shape)
     for i in range(matrix.shape[0]):
         for j in range(matrix.shape[1]):
-            if automata.borders.moore( matrix, i, j, True ) > 3:
-                aux[i][j] = 1
-            else:
+            if automata.borders.vonn_n( matrix, i, j, True ) < 4:
                 aux[i][j] = 0
+            else:
+                aux[i][j] = 1
 
     return aux
 
-def anim():
+def anim( ac ):
     plt.rcParams["figure.figsize"] = [7.00, 3.50]
     plt.rcParams["figure.autolayout"] = True
 
     fig, ax = plt.subplots()
 
-    ac= automata.automata( (50,50), maze.rules )
+    
     ac.set_random( maze.states )
 
     def update(i):
@@ -36,14 +36,22 @@ def anim():
 
         ac.envolve()
 
-    anim = FuncAnimation(fig, update, frames=10, interval=100)
+    anim = FuncAnimation(fig, update, frames=1, interval=10)
 
     plt.show()
 
 
 
 def main():
-    anim()
+    # base= np.array([
+    #     [0,1,0],
+    #     [1,0,1],
+    #     [0,1,0]
+    # ])
+    # ac= automata.automata( base.shape, rule_1, base )
+    
+    ac= automata.automata( (50,50), maze.rules )
+    anim( ac )
         
         
 
