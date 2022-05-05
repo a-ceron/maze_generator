@@ -31,28 +31,29 @@ def anim( ac ):
 
     def update(i):
         im_normed = ac.get_matrix()
-        ax.imshow(im_normed)
+        ax.imshow(im_normed, cmap='rainbow')
         ax.set_axis_off()
         ax.set_title(f"Iteración {i}")
         ac.envolve()
 
         return [im_normed]
 
-    anim = FuncAnimation(fig, update, frames=100, interval=100)
+    anim = FuncAnimation(fig, update, frames=200, interval=10)
 
+    fig.colorbar(ax=ax)
     plt.show()
 
 
 
 def main():
-    # base= np.array([
-    #     [0,1,0],
-    #     [1,0,1],
-    #     [0,1,0]
-    # ])
+    base= np.array([
+        [0,1,0],
+        [1,0,1],
+        [0,1,0]
+    ])
     # ac= automata.automata( base.shape, rule_1, base )
 
-    ac= automata.automata( (50,50), maze.rules )
+    ac= automata.automata( (70,70), maze.rules )
     anim( ac )
         
         

@@ -3,10 +3,10 @@ from enum import Enum
 from numpy import zeros
 
 class states(Enum):
-    BARREN= 0
-    FERTILE= 1
-    A= 2
-    B= 3
+    BARREN= 1
+    FERTILE= 2
+    A= 3
+    B= 4
 
 X= lambda x, y: 1 if x==y else 0
 
