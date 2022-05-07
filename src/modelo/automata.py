@@ -26,7 +26,8 @@ class automata():
                 states= 2
             self.matrix = np.random.randint( states, size=self.dim)
         elif( isinstance(states, list) ):
-            self.matrix = np.random.choices( states, weights=[0.1, 0.5, 0.2, 0.2], size=self.dim )
+            self.matrix = np.random.choices( states, weights=[0.1, 0.5, 0.1, 0.1], size=self.dim )
+            
             #self.matrix = np.random.choice( states, size=self.dim )
         elif( isinstance(states, EnumMeta) ):
             self.matrix = np.random.choice( [  x.value for x in states ], size=self.dim )
@@ -59,7 +60,21 @@ class automata():
         
    
 class borders():
-    def vonn_n( matrix, i,j, is_sum=False):
+    def vonn_n( matrix, i, j, is_sum:bool=False):
+        #Extremos derechos
+        if( i == matrix.shape[0] - 1  and j == matrix.shape[1] - 1 ):    
+            vector= [ matrix[ i ][ j - 1 ], matrix[ 0 ][ j ], matrix[ i - 1 ][ j ], matrix[ i ][ 0 ] ]
+            return sum( vector ) if is_sum else vector
+        elif( j == matrix.shape[1] - 1 ):
+            vector= [ matrix[ i ][ j - 1 ], matrix[ i + 1 ][ j ], matrix[ i - 1 ][ j ], matrix[ i ][ 0 ] ]
+            return sum( vector ) if is_sum else vector
+        #General
+        else:
+            vector= [ matrix[ i - 1 ][ j ], matrix[ i + 1 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ j + 1 ] ]
+            return sum( vector ) if is_sum else vector
+
+
+    def vonn_n_adiavatic( matrix, i,j, is_sum=False):
         if( i == 0 and j == 0 ):
             vector= [ matrix[ i ][ j + 1 ], matrix[ i + 1 ][ j ] ]
             return sum( vector ) if is_sum else vector
@@ -91,6 +106,20 @@ class borders():
             return sum( vector ) if is_sum else vector
 
     def moore( matrix, i,j, is_sum=False):
+        #Extremos derechos
+        if( i == matrix.shape[0] - 1  and j == matrix.shape[1] - 1 ):    
+            vector= [ matrix[ i - 1 ][ j ], matrix[ 0 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ 0 ], matrix[ 0 ][ 0 ], matrix[ i - 1 ][ 0 ], matrix[ 0 ][ j - 1 ], matrix[ i - 1 ][ j - 1 ] ]
+            return sum( vector ) if is_sum else vector
+        elif( j == matrix.shape[1] - 1 ):
+            vector= [ matrix[ i - 1 ][ j ], matrix[ i + 1 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ 0 ], matrix[ i + 1 ][ 0 ], matrix[ i - 1 ][ 0 ], matrix[ i + 1 ][ j - 1 ], matrix[ i - 1 ][ j - 1 ] ]
+            return sum( vector ) if is_sum else vector
+        #General
+        else:
+            vector= [ matrix[ i - 1 ][ j ], matrix[ i + 1 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ j + 1 ], matrix[ i + 1 ][ j + 1 ], matrix[ i - 1 ][ j + 1 ], matrix[ i + 1 ][ j - 1 ], matrix[ i - 1 ][ j - 1 ] ]
+            return sum( vector ) if is_sum else vector
+
+
+    def moore_adiavatic( matrix, i,j, is_sum=False):
         if( i == 0 and j == 0 ):
             vector= [ matrix[ i ][ j + 1 ], matrix[ i + 1 ][ j ], matrix[ i + 1 ][ j + 1 ] ]
             return sum( vector ) if is_sum else vector
