@@ -1,9 +1,10 @@
 import modelo.automata as automata
 import modelo.maze as maze
 
+import numpy as np
 from matplotlib.animation import FuncAnimation
 import matplotlib.pyplot as plt
-import numpy as np
+
 
 
 def rule_1(matrix):
@@ -31,7 +32,7 @@ def anim( ac ):
 
     def update(i):
         im_normed = ac.get_matrix()
-        ax.imshow(im_normed, cmap='rainbow')
+        ax.imshow(im_normed, cmap='Accent')
         ax.set_axis_off()
         ax.set_title(f"Iteración {i}")
         print(ac.get_gen())
@@ -54,28 +55,36 @@ def main():
     # ])
     # # ac= automata.automata( base.shape, rule_1, base )
 
-    ac= automata.automata( (70,70), maze.rules )
-    # anim( ac )
-    ac.set_random( maze.states )
+    shape= (100,100)
+    p= [0.5, 0.1, 0.3, 0.1]
+    ac= automata.automata( shape, maze.rules )
+    #anim( ac )
+
+
+    ac.set_random( maze.states, prob=p )
     ac.envolve()
     init= ac.get_matrix()
 
-    print(ac.get_gen())
-    for i in range(100):
-        ac.envolve()
-    t_1oo= ac.get_matrix()
-    print(ac.get_gen())
+    # print(ac.get_gen())
+    # for i in range(100):
+    #     ac.envolve()
+    # t_1oo= ac.get_matrix()
+    # print(ac.get_gen())
 
-    for i in range(100):
-        ac.envolve()
-    t_2oo= ac.get_matrix()
-    print(ac.get_gen())
+    # for i in range(100):
+    #     ac.envolve()
+    # t_2oo= ac.get_matrix()
+    # print(ac.get_gen())
+
+    fin= maze.to_maze( init )
 
     plt.imshow(init, cmap='rainbow')
     plt.show()
-    plt.imshow(t_1oo, cmap='rainbow')
-    plt.show()
-    plt.imshow(t_2oo, cmap='rainbow')
+    # plt.imshow(t_1oo, cmap='rainbow')
+    # plt.show()
+    # plt.imshow(t_2oo, cmap='rainbow')
+    # plt.show()
+    plt.imshow(fin, cmap='rainbow')
     plt.show()
         
         

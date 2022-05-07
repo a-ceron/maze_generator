@@ -1,6 +1,6 @@
 from .automata import borders
 from enum import Enum
-from numpy import zeros
+from numpy import zeros, where
 
 class states(Enum):
     BARREN= 1
@@ -59,6 +59,9 @@ def rules( matrix ):
 
     return aux
                 
-                
+def to_maze( matrix ):
+    aux= where( matrix == states.B.value, matrix, states.BARREN.value)
+    return where( matrix == states.BARREN.value, matrix, 5)
+         
                     
             
