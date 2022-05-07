@@ -1,3 +1,4 @@
+from this import d
 from .automata import borders
 from enum import Enum
 from numpy import zeros, where
@@ -10,12 +11,24 @@ class states(Enum):
 
 X= lambda x, y: 1 if x==y else 0
 
-def rules( matrix ):
+def vn( matrix ):
+    return rules( matrix, borders.vonn_n )
+
+def vn_adv( matrix ):
+    return rules( matrix, borders.vonn_n_adiavatic )
+
+def moore( matrix ):
+    return rules( matrix, borders.moore )
+
+def moore_adv( matrix ):
+    return rules( matrix, borders.moore_adiavatic )
+
+def rules( matrix, rule  ):
     aux= zeros(matrix.shape)
     for i in range(matrix.shape[0]):
         for j in range(matrix.shape[1]):
             a= matrix[i][j]
-            v= borders.moore( matrix, i, j )
+            v= rule( matrix, i, j )
 
             if( a == states.BARREN.value ):
                 s= sum( [ X( y, states.A.value ) for y in v ] )
