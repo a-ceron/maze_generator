@@ -16,4 +16,40 @@ $$ a_{i,j}^{(t+1)} = f( \sum v_i ) $$
 Se ha encontrado en automatas celulares totalisticos patrones de laberintos que se desarrollan desde una pequeña región desordenada. Los laberintos presentan un nucle estacionario y una cascara que evolucina. 
 Los automatas también presentan patrones al momento de modelar sistemas no lineares.
 
-### Interacción entre poblaciones
+## Interacción entre poblaciones
+En la dinámica de poblaciones se estudia cómo varía el nú- mero de sus componentes a lo largo del tiempo y los factores que influyen en dicho número Alvarez Martinez (2016).
+El tamaño de una población depende, entre otros factores, de la tasa de natalidad, de la tasa de mortalidad, así como de la interacción con las especies circundantes1. Las interaccio- nes que se pueden establecer en él corresponden a dos grupos generales. El primer grupo serían las interacciones entre los seres vivos, como la simbiosis, depredación2, entre otras; y el segundo grupo serían las interacciones establecidas entre los factores abióticos (físico-químicos) del biotopo y los seres vivos que caracterizan el ecosistema
+
+## Resultados
+La implentación del código sigue el siguiente orde, se carga la biblioteca de automatas y las reglas del modelo incluidas en el script maze. Se genera un autómata dos-dimensional del tamaño especificado y se le pasa la regla que se desea implementar.
+
+```python
+import modelo.automata as automata
+import modelo.maze as maze
+
+shape= (100,100)
+p= [0.5,0.1,0.25,0.15]
+n= 50
+# Generación del automata con las reglas del 
+# problema y la vecindad de moore
+M= automata.automata(shape, maze.moore)
+
+# Genera estados aleatorios
+M.set_random( maze.states, p )
+
+# Evolucona al sistema n veces
+for _ in range(n):
+    M.envolve()
+
+# Obtenemos la matris resultante
+print( M.get_matrix() )
+
+#Obtenemos la matris final que representa el laberinto
+print(maze.to_maze( M.get_matrix() ))
+```
+
+Algunos resultados de la implementación se muestran abajo
+![res1](./src/img/R1_M.png "Estados colocados de forma aleatoria")
+![res2](./src/img/R2_M.png "Resultados después de 50 iteraciones")
+![res3](./src/img/R3_M.png "Resultados después de 100 iteraciones")
+![res4](./src/img/R4_M.png "Laberinto generado")
