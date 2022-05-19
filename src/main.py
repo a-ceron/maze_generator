@@ -19,15 +19,18 @@ def rule_1(matrix):
 
     return aux
 
-def plot(data, title, filename):
+def plot(data, title, filename, to_lab=False):
     # define color map 
-    color_map = {   #1: np.array([255,255,0]), # yellow
-                    2: np.array([0,255,0]), # green
-                    3: np.array([0,0,255]), # blue
-                    4: np.array([255,0,0]), # red
-                    1: np.array([0,0,0]), # black
-                    5: np.array([255,255,255]) # white
-                } 
+    if( to_lab ):
+        color_map = {   1: np.array([0,0,0]), # black
+                        5: np.array([255,255,255]) # white
+                    } 
+    else:
+        color_map = {   1: np.array([255,255,0]), # yellow
+                        2: np.array([0,255,0]), # green
+                        3: np.array([0,0,255]), # blue
+                        4: np.array([255,0,0]), # red
+                    } 
 
     # make a 3d numpy array that has a color channel dimension   
     data_3d = np.ndarray(shape=(data.shape[0], data.shape[1], 3), dtype=int)
@@ -127,7 +130,7 @@ def main():
             M_adv.envolve()
         plot( M_adv.get_matrix(), f"Moore. Iteración {j * n}",f"R3_M_{j}_ad" )
     
-    plot( maze.to_maze( M_adv.get_matrix() ), "Moore. Laberinto","R4_M_ad" )
+    plot( maze.to_maze( M_adv.get_matrix() ), "Moore. Laberinto","R4_M_ad",True )
   
 
 if __name__ == '__main__':
