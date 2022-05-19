@@ -83,7 +83,6 @@ class borders():
             vector= [ matrix[ i - 1 ][ j ], matrix[ i + 1 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ j + 1 ] ]
             return sum( vector ) if is_sum else vector
 
-
     def vonn_n_adiavatic( matrix, i,j, is_sum=False):
         if( i == 0 and j == 0 ):
             vector= [ matrix[ i ][ j + 1 ], matrix[ i + 1 ][ j ] ]
@@ -136,8 +135,6 @@ class borders():
         else:
             vector= [ matrix[ i - 1 ][ j ], matrix[ i + 1 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ j + 1 ], matrix[ i + 1 ][ j + 1 ], matrix[ i - 1 ][ j + 1 ], matrix[ i + 1 ][ j - 1 ], matrix[ i - 1 ][ j - 1 ] ]
             return sum( vector ) if is_sum else vector
-
-
 
     def moore_adiavatic( matrix, i,j, is_sum=False):
         if( i == 0 and j == 0 ):

@@ -5,8 +5,6 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 import matplotlib.pyplot as plt
 
-
-
 def rule_1(matrix):
     """
     Una función total para un estado definido, usando la vecindad de Von Neumann. Con fronteras cerradas
@@ -23,11 +21,12 @@ def rule_1(matrix):
 
 def plot(data, title, filename):
     # define color map 
-    color_map = {   1: np.array([255,255,0]), # yellow
+    color_map = {   #1: np.array([255,255,0]), # yellow
                     2: np.array([0,255,0]), # green
                     3: np.array([0,0,255]), # blue
                     4: np.array([255,0,0]), # red
-                    5: np.array([0,0,0]) # black
+                    1: np.array([0,0,0]), # black
+                    5: np.array([255,255,255]) # white
                 } 
 
     # make a 3d numpy array that has a color channel dimension   
@@ -62,7 +61,7 @@ def anim( ac ):
 
     def update(i):
         im_normed = ac.get_matrix()
-        ax.imshow(im_normed, cmap='Accent')
+        ax.imshow(im_normed, cmap='hsv')
         ax.set_axis_off()
         ax.set_title(f"Iteración {i}")
         print(ac.get_gen())
@@ -70,17 +69,17 @@ def anim( ac ):
 
         return [im_normed]
 
-    anim = FuncAnimation(fig, update, frames=200, interval=10)
+    anim = FuncAnimation(fig, update, frames=30, interval=10)
 
     
-    plt.show()
-
+    anim.save( "anim.gif", writer='imagemagick', fps=10 )
+    #plt.show()
 
 
 def main():
     shape= (100,100)
     p= [0.5,0.1,0.25,0.15]
-    n= 50
+    n= 10
 
     # VN= automata.automata(shape, maze.vn)
     # VN.set_random( maze.states, p )
@@ -101,29 +100,34 @@ def main():
     # plot( maze.to_maze( VN_adv.get_matrix() ), "Von Neumann. Laberinto" )
     
     
-    M= automata.automata(shape, maze.moore)
-    M.set_random( maze.states, p )
-    plot( M.get_matrix(), "Moore. Iteración 0", "R1_M" )
-    for _ in range(n):
-        M.envolve()
-    plot( M.get_matrix(), f"Moore. Iteración {n}","R2_M" ) 
-    for _ in range(n):
-        M.envolve()
-    plot( M.get_matrix(), f"Moore. Iteración {2*n}","R3_M" )
-
-    plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_M" )
-
-    # M_adv= automata.automata(shape, maze.moore_adv)
-    # M_adv.set_random( maze.states, p )
-    # plot( M_adv.get_matrix(), "Moore. Iteración 0", "R1_M_ad" )
+    # M= automata.automata(shape, maze.moore)
+    # M.set_random( maze.states, p )
+    # plot( M.get_matrix(), "Moore. Iteración 0", "R1_M" )
     # for _ in range(n):
-    #     M_adv.envolve()
-    # plot( M_adv.get_matrix(), f"Moore. Iteración {n}","R2_M_ad" ) 
+    #     M.envolve()
+    # plot( M.get_matrix(), f"Moore. Iteración {n}","R2_M" ) 
     # for _ in range(n):
-    #     M_adv.envolve()
-    # plot( M_adv.get_matrix(), f"Moore. Iteración {2*n}","R3_M_ad" )
+    #     M.envolve()
+    # plot( M.get_matrix(), f"Moore. Iteración {2*n}","R3_M" )
+
+    # plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_M" )
+
+    M_adv= automata.automata(shape, maze.moore_adv)
+    M_adv.set_random( maze.states, p )
+
+    # anim( M_adv )
+
+    plot( M_adv.get_matrix(), "Moore. Iteración 0", "R1_M_ad" )
+    for i in range(n):
+        M_adv.envolve()
+        plot( M_adv.get_matrix(), f"Moore. Iteración {i}",f"R2_M_{i}_ad" ) 
+
+    for j in range(1,5):
+        for _ in range(n):
+            M_adv.envolve()
+        plot( M_adv.get_matrix(), f"Moore. Iteración {j * n}",f"R3_M_{j}_ad" )
     
-    # plot( maze.to_maze( M_adv.get_matrix() ), "Moore. Laberinto","R4_M_ad" )
+    plot( maze.to_maze( M_adv.get_matrix() ), "Moore. Laberinto","R4_M_ad" )
   
 
 if __name__ == '__main__':
