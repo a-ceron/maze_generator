@@ -19,12 +19,17 @@ def rule_1(matrix):
 
     return aux
 
-def plot(data, title, filename, to_lab=False):
+def plot(data, title, filename, to_lab=False, inverse=False):
     # define color map 
     if( to_lab ):
-        color_map = {   1: np.array([0,0,0]), # black
-                        5: np.array([255,255,255]) # white
-                    } 
+        if( inverse ):
+            color_map = {   1: np.array([0,0,0]), # black
+                            5: np.array([255,255,255]) # white
+                        } 
+        else:
+            color_map = {   5: np.array([0,0,0]), # black
+                            1: np.array([255,255,255]) # white
+                        } 
     else:
         color_map = {   1: np.array([255,255,0]), # yellow
                         2: np.array([0,255,0]), # green
@@ -103,34 +108,46 @@ def main():
     # plot( maze.to_maze( VN_adv.get_matrix() ), "Von Neumann. Laberinto" )
     
     
-    # M= automata.automata(shape, maze.moore)
-    # M.set_random( maze.states, p )
-    # plot( M.get_matrix(), "Moore. Iteración 0", "R1_M" )
-    # for _ in range(n):
-    #     M.envolve()
-    # plot( M.get_matrix(), f"Moore. Iteración {n}","R2_M" ) 
-    # for _ in range(n):
-    #     M.envolve()
-    # plot( M.get_matrix(), f"Moore. Iteración {2*n}","R3_M" )
+    M= automata.automata(shape, maze.moore)
+    M.set_random( maze.states, p )
+    plot( M.get_matrix(), "Moore. Iteración 0", "R1_M" )
+    for _ in range(n):
+        M.envolve()
+    plot( M.get_matrix(), f"Moore. Iteración {n}","R2_M" ) 
+    for _ in range(n):
+        M.envolve()
+    plot( M.get_matrix(), f"Moore. Iteración {2*n}","R3_M" )
 
-    # plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_M" )
+    plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_M", True )
+    plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_MB", True, True )
 
-    M_adv= automata.automata(shape, maze.moore_adv)
-    M_adv.set_random( maze.states, p )
+    M= automata.automata(shape, maze.moore_adv)
+    M.set_random( maze.states, p )
+
+    plot( M.get_matrix(), "Moore adiavatico. Iteración 0", "R1_M_A" )
+    for _ in range(n):
+        M.envolve()
+    plot( M.get_matrix(), f"Moore adiavatico. Iteración {n}","R2_M_A" ) 
+    for _ in range(n):
+        M.envolve()
+    plot( M.get_matrix(), f"Moore adiavatico. Iteración {2*n}","R3_M_A" )
+
+    plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_M_A", True )
+    plot( maze.to_maze( M.get_matrix() ), "Moore. Laberinto","R4_MB_A", True, True )
 
     # anim( M_adv )
 
-    plot( M_adv.get_matrix(), "Moore. Iteración 0", "R1_M_ad" )
-    for i in range(n):
-        M_adv.envolve()
-        plot( M_adv.get_matrix(), f"Moore. Iteración {i}",f"R2_M_{i}_ad" ) 
+    # plot( M_adv.get_matrix(), "Moore. Iteración 0", "R1_M_ad" )
+    # for i in range(n):
+    #     M_adv.envolve()
+    #     plot( M_adv.get_matrix(), f"Moore. Iteración {i}",f"R2_M_{i}_ad" ) 
 
-    for j in range(1,5):
-        for _ in range(n):
-            M_adv.envolve()
-        plot( M_adv.get_matrix(), f"Moore. Iteración {j * n}",f"R3_M_{j}_ad" )
+    # for j in range(1,5):
+    #     for _ in range(n):
+    #         M_adv.envolve()
+    #     plot( M_adv.get_matrix(), f"Moore. Iteración {j * n}",f"R3_M_{j}_ad" )
     
-    plot( maze.to_maze( M_adv.get_matrix() ), "Moore. Laberinto","R4_M_ad",True )
+    # plot( maze.to_maze( M_adv.get_matrix() ), "Moore. Laberinto","R4_M_ad",True )
   
 
 if __name__ == '__main__':
