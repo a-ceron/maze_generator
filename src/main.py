@@ -19,23 +19,39 @@ def rule_1(matrix):
 
     return aux
 
-def plot(data, title, filename, to_lab=False, inverse=False):
+def get_colormap(A:bool, B:bool)->dict:
     # define color map 
-    if( to_lab ):
-        if( inverse ):
-            color_map = {   1: np.array([0,0,0]), # black
+    if( A ):
+        if( B ):
+            return {   1: np.array([0,0,0]), # black
                             5: np.array([255,255,255]) # white
                         } 
         else:
-            color_map = {   5: np.array([0,0,0]), # black
+            return {   5: np.array([0,0,0]), # black
                             1: np.array([255,255,255]) # white
                         } 
     else:
-        color_map = {   1: np.array([255,255,0]), # yellow
+        return {   1: np.array([255,255,0]), # yellow
                         2: np.array([0,255,0]), # green
                         3: np.array([0,0,255]), # blue
                         4: np.array([255,0,0]), # red
                     } 
+
+def plot(data, title:str, filename:str, to_lab:bool=False, inverse:bool=False):
+    """Grafica el autómata celular
+
+    :param data: Matriz de estados
+    :type data: np.array
+    :param title: Titulo de la figura
+    :type title: str
+    :param filename: Nombre del archivo
+    :type filename: str
+    :param to_lab: True si quiere una escala de dos colores, defaults to False
+    :type to_lab: bool, optional
+    :param inverse: True si quiere una inversión a las reglas originales, defaults to False
+    :type inverse: bool, optional
+    """
+    color_map= get_colormap(to_lab, inverse)
 
     # make a 3d numpy array that has a color channel dimension   
     data_3d = np.ndarray(shape=(data.shape[0], data.shape[1], 3), dtype=int)
@@ -46,13 +62,6 @@ def plot(data, title, filename, to_lab=False, inverse=False):
     # display the plot 
     fig, ax = plt.subplots(1,1)
     ax.imshow(data_3d)
-
-    # add numbers to the plot 
-    # thanks to tmdavison answer here https://stackoverflow.com/a/40890587/7871710
-    # for i in range(0, data.shape[0]):
-    #     for j in range(0, data.shape[1]):
-    #         c = data[j,i]
-    #         ax.text(i, j, str(c), va='center', ha='center')
 
     ax.set_title(title)
     plt.axis('off')
