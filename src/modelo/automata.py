@@ -9,7 +9,17 @@ from matplotlib import animation
 from matplotlib.pyplot import subplots, show, close
 
 class automata():
+    """Crea un automata celular
+
+    :param dim: Dimensiones del automata
+    :type dim: int
+    :param phi: Reglas del automata
+    :type phi: function
+    :param initial: Estado inicial del automata, defaults to None
+    :type initial: np.arange, optional
+    """
     def __init__(self, dim:int, phi, initial:np.arange=None ) -> None:
+        """Constructor de la clase"""
         self.dim = dim
         self.phi = phi
         self.matrix= initial
@@ -18,8 +28,13 @@ class automata():
             self.matrix = np.zeros(dim)
 
     def set_random(self, states:int or list= None, prob:int or list=None ):
-        """
-        set random matrix
+        """Inicializa los estados de la matriz
+
+        :param states: Estados de la matriz, defaults to None
+        :type states: int or list, optional
+        :param prob: Vector de distribución de estados, defaults to None
+        :type prob: int or list, optional
+        :raises ValueError: Si no es un tipo de datos adecuado no se permite la inicialización
         """
         if( isinstance(states, int) ):
             if( states is None ):
@@ -59,8 +74,9 @@ class automata():
         self.matrix= self.phi(self.matrix)
         self.gen+= 1
         
-   
 class borders():
+    """Clase de fronteras, ahí se aplican las diferentes fornteras
+    """
     def vonn_n( matrix, i, j, is_sum:bool=False):
         if( i == 0 and j == matrix.shape[1] - 1 ):
             vector= [ matrix[ i - 1 ][ j ], matrix[ i + 1 ][ j ], matrix[ i ][ j - 1 ], matrix[ i ][ 0 ] ]
